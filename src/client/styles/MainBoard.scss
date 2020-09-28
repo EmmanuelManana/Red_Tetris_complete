@@ -1,0 +1,76 @@
+
+$primary-color: #380707;
+$secondary-color: black;
+$background-color: #380707;
+$inactive-board-empty-cell-color: #380707;
+$inactive-board-filled-cell-color: black;
+$inactive-board-blocked-cell-color: #0c0a0a;
+$active-board-empty-cell-color: #380707;
+$active-board-filled-cell-color: black;
+$active-board-blocked-cell-color: #5a5a5a;
+$inactive-player-spectrum-filled-cell-color: #332e2e;
+$active-player-spectrum-filled-cell-color: #d8172c;
+$next-piece-empty-cell-color: #380707;
+$next-piece-filled-cell-color: black;
+$player-name-tooltip-color: #222222;
+
+@mixin border($width, $color, $blur-radius: 0.5em) {
+  border: $width solid $color;
+  box-shadow: 0 0 $blur-radius $color;
+}
+
+@mixin cell($color) {
+  background-color: $color;
+}
+
+@mixin text($color) {
+  color: $color;
+}
+
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+** Main Board
+*/
+
+#main-board {
+  .board {
+    box-sizing: border-box;
+    width: 35vh;
+    // padding: 1em;
+    overflow: hidden;
+    @include border(0.1em, $inactive-board-filled-cell-color);
+    .cell {
+      margin: 2px;
+      &.empty {
+        @include cell($inactive-board-empty-cell-color);
+      }
+      &.filled {
+        @include cell($inactive-board-filled-cell-color);
+      }
+      &.blocked {
+        @include cell($inactive-board-blocked-cell-color);
+      }
+    }
+  }
+  &.active .board {
+    @include border(0.1em, $active-board-filled-cell-color);
+    .cell {
+      &.empty {
+        @include cell($active-board-empty-cell-color);
+      }
+      &.filled {
+        @include cell($active-board-filled-cell-color);
+      }
+      &.blocked {
+        @include cell($active-board-blocked-cell-color);
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+$inactive-player-spectrum-filled-cell-color: black;
+$active-player-spectrum-filled-cell-color: black;
+$inactive-opponent-spectrum-filled-cell-color: black;
+$active-opponent-spectrum-filled-cell-color: black;
+
+@mixin border($width, $color, $blur-radius: 0.5em) {
+  border: $width solid $color;
+}
+
+@mixin cell($color, $blur-radius: 0.5em) {
+  background-color: $color; 
+}
+
+@mixin text($color, $blur-radius: 0.5em) {
+  color: $color;
+}
+
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+#spectrums-visual-container {
+  @include hide-scrollbar;
+}
+
+.spectrums-visual {
+  display: flex;
+  flex-wrap: nowrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 1em auto;
+  .spectrum {
+    margin: 0.5em;
+    text-align: center;
+    &:first-child {
+      margin-left: 1.5em;
+    }
+    &:last-child {
+      margin-right: 1.5em;
+    }
+    .board {
+      position: relative;
+      flex: none;
+      width: 1.5em;
+    }
+    &.opponent {
+      .board {
+        @include border(0.1em, $inactive-opponent-spectrum-filled-cell-color);
+        .cell.filled {
+          @include cell($inactive-opponent-spectrum-filled-cell-color);
+        }
+      }
+      .score {
+        @include text($inactive-opponent-spectrum-filled-cell-color);
+      }
+      &.active {
+        .board {
+          @include border(0.1em, $active-opponent-spectrum-filled-cell-color);
+          .cell.filled {
+            @include cell($active-opponent-spectrum-filled-cell-color);
+          }
+        }
+        .score {
+          @include text($active-opponent-spectrum-filled-cell-color);
+        }
+      }
+    }
+    &.player {
+      .board {
+        @include border(0.1em, $inactive-player-spectrum-filled-cell-color);
+        .cell.filled {
+          @include cell($inactive-player-spectrum-filled-cell-color);
+        }
+      }
+      .score {
+        @include text($inactive-player-spectrum-filled-cell-color);
+      }
+      &.active {
+        .board {
+          @include border(0.1em, $active-player-spectrum-filled-cell-color);
+          .cell.filled {
+            @include cell($active-player-spectrum-filled-cell-color);
+          }
+        }
+        .score {
+          @include text($active-player-spectrum-filled-cell-color);
+        }
+      }
+    }
+  }
+}
+

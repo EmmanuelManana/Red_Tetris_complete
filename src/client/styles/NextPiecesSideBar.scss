@@ -1,0 +1,34 @@
+
+$next-piece-empty-cell-color: #380707;
+$next-piece-filled-cell-color: black;
+
+
+@mixin cell($color) {
+    background-color: $color;
+  }
+  
+#next-pieces-sidebar {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    .next-piece {
+      width: 7em;
+      padding: 1em;
+      .row {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        .cell {
+          margin: 2px;
+          &.empty {
+            @include cell($next-piece-empty-cell-color);
+          }
+          &.filled {
+            @include cell($next-piece-filled-cell-color);
+          }
+        }
+      }
+    }
+  }

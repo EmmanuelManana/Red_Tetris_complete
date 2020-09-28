@@ -1,0 +1,214 @@
+@font-face {
+  font-family: Akrobat;
+  src: url('../fonts/akrobat-bold.ttf') format('truetype');
+}
+
+/*
+** Colors
+*/
+
+$primary-color: #380707;
+$secondary-color: black;
+$background-color: #380707;
+$inactive-board-empty-cell-color: #380707;
+$inactive-board-filled-cell-color: black;
+$inactive-board-blocked-cell-color: #0c0a0a;
+$active-board-empty-cell-color: #380707;
+$active-board-filled-cell-color: black;
+$active-board-blocked-cell-color: #5a5a5a;
+$inactive-player-spectrum-filled-cell-color: #332e2e;
+$active-player-spectrum-filled-cell-color: #d8172c;
+$next-piece-empty-cell-color: #380707;
+$next-piece-filled-cell-color: black;
+$player-name-tooltip-color: #222222;
+
+/*
+** Mixins
+*/
+
+@mixin border($width, $color, $blur-radius: 0.5em) {
+  border: $width solid $color;
+  box-shadow: 0 0 $blur-radius $color;
+}
+
+@mixin cell($color) {
+  background-color: $color;
+}
+
+@mixin text($color) {
+  color: $color;
+}
+
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+** Page structure
+*/
+
+body {
+  overflow: hidden;
+  background-color: $background-color;
+  color: $secondary-color;
+  font-family: Akrobat, sans-serif;
+}
+
+#tetris {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
+header {
+  flex: 0 0 auto;
+  width: 100%;
+  overflow-x: auto;
+}
+
+main {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+aside {
+  flex: 1;
+}
+
+section {
+  display: flex;
+  flex: initial;
+  flex-flow: column;
+  justify-content: center;
+}
+
+footer {
+  flex: 0 0 auto;
+}
+
+.score {
+  display: inline-block;
+  position: relative;
+  width: 4em;
+  margin-top: 0.5em;
+  .tooltip-text {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    bottom: 150%;
+    left: -1em;
+    box-sizing: border-box;
+    width: 6em;
+    padding: 0.5em;
+    background-color: white;
+    color: $player-name-tooltip-color;
+    text-align: center;
+    text-shadow: none;
+    word-break: break-all;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: white transparent transparent transparent;
+    }
+  }
+  &:hover .tooltip-text {
+    display: block;
+  }
+}
+
+/*
+** Notification
+*/
+
+.notification-container {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  width: 15em;
+  max-height: 100%;
+  padding: 0 1em;
+  overflow-x: hidden;
+  overflow-y: auto;
+  @include hide-scrollbar;
+  .notification {
+    position: relative;
+    box-sizing: border-box;
+    margin-top: 15px;
+    padding: 1em;
+    opacity: 0.8;
+    font-size: 1em;
+    line-height: 1.2em;
+    cursor: pointer;
+    @include text($secondary-color);
+    @include cell($primary-color);
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+    &.notification-enter {
+      visibility: hidden;
+      transform: translate3d(100%, 0, 0);
+      &.notification-enter-active {
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+        transition: all 0.4s;
+      }
+    }
+    &.notification-leave {
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+      &.notification-leave-active {
+        visibility: hidden;
+        transform: translate3d(100%, 0, 0);
+        transition: all 0.4s;
+      }
+    }
+    .title {
+      margin-bottom: 0.4em;
+      font-size: 1em;
+      font-weight: bold;
+      line-height: 1.2em;
+    }
+  }
+}
+
+/*
+** Control button
+*/
+
+.control-button {
+  position: fixed;
+  z-index: 100000;
+  right: 3em;
+  bottom: 2em;
+  padding: 0.75em 1em;
+  transition: all 0.3s ease 0s;
+  border-radius: 4em;
+  background-color: $primary-color;
+  // box-shadow: 0 0 0.25em $primary-color, 0 0.5em 0.75em rgba(0, 0, 0, 0.3);
+  font-size: 1.2em;
+  text-align: center;
+  cursor: pointer;
+  @include text($secondary-color);
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+@media all and (max-width: 1000px) {
+  aside {
+    display: none !important;
+  }
+}

@@ -1,0 +1,43 @@
+
+$primary-color: #380707;
+
+
+@mixin hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+@mixin text($color) {
+  color: $color;
+}
+
+#statistics-sidebar {
+    display: flex;
+    flex-flow: column-reverse;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow: auto;
+    font-size: 2em;
+    text-align: center;
+    text-transform: uppercase;
+    @include text(black);
+    @include hide-scrollbar;
+    .statistic-block {
+      width: 7em;
+      padding: 0.5em;
+      p {
+        &:first-child {
+          font-size: 0.5em;
+          text-transform: none;
+        }
+        &:last-child {
+          font-size: 0.6em;
+        }
+      }
+    }
+  }
+  

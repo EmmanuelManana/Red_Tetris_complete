@@ -1,0 +1,16 @@
+.board {
+    .row {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      .cell {
+        flex: auto;
+        background-color: transparent;
+        &:before {
+          content: '';
+          padding-top: 100%;
+          float: left;
+        }
+      }
+    }
+  }
